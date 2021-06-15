@@ -1,6 +1,7 @@
 import React from 'react'
 import { withStyles } from "@material-ui/core/styles"
 import Button from './button'
+import MessageArea from './message-area'
 import Api from '../api'
 
 const styles = () => ({
@@ -62,16 +63,37 @@ class MainPanel extends React.PureComponent {
     this.forceUpdate()
   }
 
+  handleClear = () => {
+    this.setState({
+      errorMessages: [],
+      warningMessages: [],
+      infoMessages: [],
+    });
+  }
+
+  removeMessage = (key, messages, index) => {
+    this.setState({
+      [key]: messages.splice(index, 1),
+    });
+  }
+
   render() {
     const isApiStarted = this.api.isStarted()
     const { classes } = this.props
+    const { errorMessages, warningMessages, infoMessages } = this.state
 
     return (
       <div>
         <div className={classes.buttons}>
           <Button title={!isApiStarted ? 'Start' : 'Stop'} onClick={this.handleStart} />
-          <Button title={'Clear'} />
+          <Button title={'Clear'} onClick={this.handleClear} />
         </div>
+        <MessageArea
+          errorMessages={errorMessages}
+          warningMessages={warningMessages}
+          infoMessages={infoMessages}
+          removeMessage={this.removeMessage}
+        />
       </div>
     )
   }
