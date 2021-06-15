@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MessageList from './components/message-list'
+import MainPanel from './components/main-panel'
 
-const NewApp = require('./components/message-list').default
+const NewApp = require('./components/main-panel').default
 
 function renderApp(App) {
   ReactDOM.render(<App />, document.getElementById('root'))
 }
 
-renderApp(MessageList)
+renderApp(MainPanel)
 
 if (module.hot) {
-  module.hot.accept('./components/message-list', () => {
+  module.hot.accept('./components/main-panel', () => {
     renderApp(NewApp)
   })
 }
